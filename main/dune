@@ -1,0 +1,5 @@
+(executable
+ (public_name pokemon)
+ (name main)
+ (libraries monads)
+ )
