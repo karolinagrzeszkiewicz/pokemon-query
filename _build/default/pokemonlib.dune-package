@@ -1,0 +1,12 @@
+(lang dune 2.9)
+(name pokemonlib)
+(library
+ (name pokemonlib)
+ (kind normal)
+ (archives (byte monads.cma) (native monads.cmxa))
+ (plugins (byte monads.cma) (native monads.cmxs))
+ (native_archives monads.a)
+ (main_module_name Monads)
+ (modes byte native)
+ (modules
+  (singleton (name Monads) (obj_name monads) (visibility public) (impl))))

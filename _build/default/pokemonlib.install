@@ -1,0 +1,21 @@
+lib: [
+  "_build/install/default/lib/pokemonlib/META"
+  "_build/install/default/lib/pokemonlib/dune-package"
+  "_build/install/default/lib/pokemonlib/monads.a"
+  "_build/install/default/lib/pokemonlib/monads.cma"
+  "_build/install/default/lib/pokemonlib/monads.cmi"
+  "_build/install/default/lib/pokemonlib/monads.cmt"
+  "_build/install/default/lib/pokemonlib/monads.cmx"
+  "_build/install/default/lib/pokemonlib/monads.cmxa"
+  "_build/install/default/lib/pokemonlib/monads.ml"
+  "_build/install/default/lib/pokemonlib/opam"
+]
+libexec: [
+  "_build/install/default/lib/pokemonlib/monads.cmxs"
+]
+bin: [
+  "_build/install/default/bin/pokemon"
+]
+doc: [
+  "_build/install/default/doc/pokemonlib/README.md"
+]

@@ -16,3 +16,6 @@ all:
 clean:
 # Remove files produced by dune.
 	dune clean
+
+utop:
+	dune utop . --profile release
