@@ -196,7 +196,7 @@
   * a different argument evaluation strategy is simulated):
   * *)
  
- open Lazy 
+ (*open Lazy *)
  
  type 'a io_better = IOBetter of 'a Lazy.t
  ;;
@@ -249,6 +249,12 @@
    match chain_io_better_actions with 
    | IOBetter lazy_x -> Lazy.force lazy_x
  ;;
+
+ let force (ma : 'a io_better) : 'a =
+  match ma with 
+   | IOBetter lazy_a -> Lazy.force lazy_a
+  ;;
+
  
  (* Comment: 
  

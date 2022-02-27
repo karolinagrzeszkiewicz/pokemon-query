@@ -1,6 +1,0 @@
-description = ""
-requires = ""
-archive(byte) = "monads.cma"
-archive(native) = "monads.cmxa"
-plugin(byte) = "monads.cma"
-plugin(native) = "monads.cmxs"
