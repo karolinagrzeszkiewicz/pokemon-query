@@ -32,7 +32,7 @@ let get_reqBody_api2 name =
 let run () = 
   ((ask_for_input () >>= fun name -> get_reqBody_api1 name) 
   |> get_habitat) >>| 
-  fun opt_str -> Option.iter opt_str (fun s -> print_endline ">"; print_endline s)
+  fun opt_str -> Option.iter opt_str (fun s ->  print_endline ("> "^s^"\n")
 
 
 let () = 
