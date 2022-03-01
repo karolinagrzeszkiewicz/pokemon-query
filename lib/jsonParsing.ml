@@ -96,7 +96,7 @@ let get_is_legendary json_str =
 
 (* habitat *)
 
-let get_habitat_name json_str = 
+let get_habitat json_str = 
   (json_str >>| fun str -> get_field_json "habitat" str) 
   >>| (fun opt_str -> Option.bind opt_str (fun str -> find_field_string "name" str))
 
