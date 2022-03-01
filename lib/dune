@@ -1,4 +1,6 @@
 (library
-(name monads)
+(name pokemonlib)
 (public_name pokemonlib)
+(wrapped false)
+(libraries core async uri yojson cohttp cohttp-async async_ssl)
 )

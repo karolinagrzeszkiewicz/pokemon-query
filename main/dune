@@ -1,4 +1,4 @@
 (executable
  (public_name pokemon)
  (name main)
- (libraries monads core async uri yojson cohttp cohttp-async async_ssl))
+ (libraries pokemonlib core async uri yojson cohttp cohttp-async async_ssl))
