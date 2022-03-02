@@ -154,7 +154,7 @@ let name_printer name_json_pair =
   let opt_name = get_name opt_json in
   begin match opt_name with (* in case the json is a valid json it is still worth checking if it has info about this pokemon *)
   | None -> print_endline "Invalid pokemon name! \n"; (name, None)
-  | Some s -> printf "name: %s \n" s; (name, opt_json)
+  | Some s -> printf "\nname: %s \n \n" s; (name, opt_json)
   end
 
 
@@ -164,8 +164,8 @@ let is_legendary_printer name_json_pair =
   | None -> (name, opt_json)
   | Some json -> 
     begin match get_is_legendary opt_json with
-    | None -> print_endline "is_legendary: NA \n"
-    | Some b -> printf "is_legendary: %b \n" b
+    | None -> print_endline "is_legendary: NA \n \n"
+    | Some b -> printf "is_legendary: %b \n \n" b
     end; 
     (name, opt_json)
   end
@@ -176,8 +176,8 @@ let habitat_printer name_json_pair =
   | None -> (name, opt_json)
   | Some json -> 
     begin match get_habitat opt_json with
-    | None -> print_endline "habitat: NA \n"
-    | Some s -> printf "habitat: %s \n" s
+    | None -> print_endline "habitat: NA \n \n"
+    | Some s -> printf "habitat: %s \n \n" s
     end; 
     (name, opt_json)
   end
@@ -188,8 +188,8 @@ let description_printer name_json_pair =
   | None -> (name, opt_json)
   | Some json -> 
     begin match get_flavor_text opt_json with
-    | None -> print_endline "description: NA \n"
-    | Some s -> printf "description: %s \n" s
+    | None -> print_endline "description: NA \n \n"
+    | Some s -> printf "description: %s \n \n" s
     end; 
     (name, opt_json)
   end
@@ -199,7 +199,7 @@ let height_printer name_json_pair =
   let opt_height = get_height opt_json in
   begin match opt_height with (* in case the json is a valid json it is still worth checking if it has info about this pokemon *)
   | None -> (name, None)
-  | Some x -> printf "height: %i \n" x; (name, opt_json)
+  | Some x -> printf "height: %i \n \n" x; (name, opt_json)
   end
 
 let unparse_list ls = (* for a list of strings only!! *)
@@ -220,8 +220,8 @@ let types_printer name_json_pair =
   | None -> (name, opt_json)
   | Some json -> 
     begin match get_types opt_json with
-    | None -> print_endline "types: NA \n"
-    | Some ls -> printf "types: %s \n" (unparse_list ls)
+    | None -> print_endline "types: NA \n \n"
+    | Some ls -> printf "types: %s \n \n" (unparse_list ls)
     end; 
     (name, opt_json)
   end

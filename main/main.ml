@@ -31,8 +31,9 @@ let get_reqBody name uri = (* val get_reqBody : 'a -> Uri.t -> ('a * string opti
 (* the program *)
 
 let run () =
-  ((ask_for_input () >>| fun name -> get_uri_api1 name)
-  >>= fun (name, uri) -> get_reqBody name uri) (* (string * string option) Deferred.t *)
+  ask_for_input () 
+  >>| (fun name -> get_uri_api1 name)
+  >>= (fun (name, uri) -> get_reqBody name uri) (* (string * string option) Deferred.t *)
   >>| (fun pair -> name_printer pair)
   >>| (fun pair -> is_legendary_printer pair)
   >>| (fun pair -> habitat_printer pair)
@@ -41,6 +42,7 @@ let run () =
   >>= (fun (name, uri) -> get_reqBody name uri)
   >>| (fun pair -> height_printer pair)
   >>| (fun pair -> types_printer pair)
+  >>= (fun _ -> exit 0)
 
 
 let () = 
