@@ -1,8 +1,11 @@
 open Core
 open Async 
 open Yojson
+open JsonHelper
 open JsonParsing
+open Printers
 open Cohttp_async
+
 
 (* User input *)
 
@@ -11,8 +14,8 @@ let ask_for_input () =
   print_endline "> Enter a Pokemon name: ";
   Reader.read_line stdin
   >>| function
-  | `Eof -> "" (* None *)
-  | `Ok s -> s (* Some s *)
+  | `Eof -> "" 
+  | `Ok s -> s 
 
 (* API calls *)
 
@@ -28,26 +31,32 @@ let get_reqBody name uri = (* val get_reqBody : 'a -> Uri.t -> ('a * string opti
   | Ok "Not Found" | Error _ -> (name, None)
   | Ok str -> (name, Some str)
 
+
 (* the program *)
+
+let signal_invalid json_opt = 
+  if Option.is_empty json_opt 
+  then print_endline "Invalid Pokemon name!"
+
 
 let run () =
   ask_for_input () 
   >>| (fun name -> get_uri_api1 name)
   >>= (fun (name, uri) -> get_reqBody name uri) (* (string * string option) Deferred.t *)
-  >>| (fun pair -> name_printer pair)
-  >>| (fun pair -> is_legendary_printer pair)
-  >>| (fun pair -> habitat_printer pair)
-  >>| (fun pair -> description_printer pair)
+  >>| (fun pair -> NamePrinter.print pair)
+  >>| (fun pair -> IsLegendaryPrinter.print pair)
+  >>| (fun pair -> HabitatPrinter.print pair)
+  >>| (fun pair -> DescriptionPrinter.print pair)
   >>| (fun (name, _) -> get_uri_api2 name)
   >>= (fun (name, uri) -> get_reqBody name uri)
-  >>| (fun pair -> height_printer pair)
-  >>| (fun pair -> types_printer pair)
+  >>| (fun pair -> HeightPrinter.print pair)
+  >>| (fun pair -> TypesPrinter.print pair)
+  >>| (fun (name, json_opt) -> signal_invalid json_opt)
   >>= (fun _ -> exit 0)
 
 
 let () = 
   let _ = run () in
-  (*don't_wait_for (exit 0);*)
   never_returns (Scheduler.go ())
 
 
