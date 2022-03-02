@@ -26,7 +26,7 @@ module NameParser : Parser = struct
 
   let parser json_str_opt = Option.bind json_str_opt (fun s -> get_field_string "name" s)
 
-  let print_not_found label = printf "%s: NA \n \n" label
+  let print_not_found label = ()
 
   let print_found label value = printf "%s: %s \n \n" label value
 
@@ -106,7 +106,7 @@ module HeightParser : Parser = struct
 
   let parser json_str_opt = Option.bind json_str_opt (fun str -> get_field_int "height" str)
 
-  let print_not_found label = printf "%s: NA \n \n" label
+  let print_not_found label = ()
 
   let print_found label value = printf "%s: %i \n \n" label value
 

@@ -16,10 +16,9 @@ module Printer(Parse: Parser) = struct
     | None -> (name, opt_json)
     | Some json -> 
       begin match parser opt_json with
-      | None -> print_not_found label
-      | Some value -> print_found label value
+      | None -> print_not_found label; (name, None)
+      | Some value -> print_found label value; (name, opt_json)
       end; 
-      (name, opt_json)
     end
 
 
