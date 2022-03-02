@@ -42,7 +42,7 @@ let signal_invalid json_opt =
 let run () =
   ask_for_input () 
   >>| (fun name -> get_uri_api1 name)
-  >>= (fun (name, uri) -> get_reqBody name uri) (* (string * string option) Deferred.t *)
+  >>= (fun (name, uri) -> get_reqBody name uri) 
   >>| (fun pair -> NamePrinter.print pair)
   >>| (fun pair -> IsLegendaryPrinter.print pair)
   >>| (fun pair -> HabitatPrinter.print pair)

@@ -8,8 +8,8 @@ module type Parser = sig
   type output
   val label : string
   val parser : string option -> output option
-  val print_not_found : string -> unit (* printf "%s: NA \n \n" label *)
-  val print_found : string -> output -> unit (* e.g. printf "%s %i";;*)
+  val print_not_found : string -> unit 
+  val print_found : string -> output -> unit 
 end
 
 (* PARSING JSON: entry-specific *)
