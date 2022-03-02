@@ -5,6 +5,7 @@ This project contains an application that enables a user to query the PokeAPI (h
 
 ### Required OCaml libraries:
 - async_ssl: ```opam install async_ssl``` (note: this requires OpenSSL, which can be installed with: ``` brew install openssl```)
+- Core: ```opam install core```
 - Cohttp: ```opam install cohttp```
 - Async: ```opam install async```
 - Cohttp_async: ```opam install cohttp-async```
