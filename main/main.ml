@@ -11,34 +11,43 @@ let ask_for_input () =
   print_endline "> Enter a Pokemon name: ";
   Reader.read_line stdin
   >>| function
-  | `Eof -> ""
-  | `Ok s -> s
-
-
+  | `Eof -> "" (* None *)
+  | `Ok s -> s (* Some s *)
 
 (* API calls *)
 
-let get_reqBody_api1 name =
-  let uri = Uri.of_string ("https://pokeapi.co/api/v2/pokemon-species/"^name) in
-  Client.call `GET uri >>= fun (_, body) ->
-  body |> Cohttp_async.Body.to_string >>| fun body -> body
+let get_uri_api1 name = (name, Uri.of_string ("https://pokeapi.co/api/v2/pokemon-species/"^name))
 
-let get_reqBody_api2 name =
-  let uri = Uri.of_string ("https://pokeapi.co/api/v2/pokemon/"^name) in
-  Client.call `GET uri >>= fun (_, body) ->
-  body |> Cohttp_async.Body.to_string >>| fun body -> body
+let get_uri_api2 name = (name, Uri.of_string ("https://pokeapi.co/api/v2/pokemon/"^name))
 
+let get_reqBody name uri = (* val get_reqBody : 'a -> Uri.t -> ('a * string option) Deferred.t *)
+  try_with 
+    (fun () -> (Client.call `GET uri >>= fun (_, body) ->
+    body |> Cohttp_async.Body.to_string >>| fun body -> body))
+  >>| function
+  | Ok "Not Found" | Error _ -> (name, None)
+  | Ok str -> (name, Some str)
 
-let run () = 
-  ((ask_for_input () >>= fun name -> get_reqBody_api1 name) 
-  |> get_habitat) >>| 
-  fun opt_str -> Option.iter opt_str (fun s ->  print_endline ("> "^s^"\n")
+(* the program *)
+
+let run () =
+  ((ask_for_input () >>| fun name -> get_uri_api1 name)
+  >>= fun (name, uri) -> get_reqBody name uri) (* (string * string option) Deferred.t *)
+  >>| (fun pair -> name_printer pair)
+  >>| (fun pair -> is_legendary_printer pair)
+  >>| (fun pair -> habitat_printer pair)
+  >>| (fun pair -> description_printer pair)
+  >>| (fun (name, _) -> get_uri_api2 name)
+  >>= (fun (name, uri) -> get_reqBody name uri)
+  >>| (fun pair -> height_printer pair)
+  >>| (fun pair -> types_printer pair)
 
 
 let () = 
-  let _ =  run () in
+  let _ = run () in
   (*don't_wait_for (exit 0);*)
   never_returns (Scheduler.go ())
+
 
 
 
