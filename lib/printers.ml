@@ -10,7 +10,7 @@ module Printer(Parse: Parser) = struct
 
   include Parse
 
-  let print name_json_pair = 
+  let print (name_json_pair : string * string option) : string * string option = 
     let (name, opt_json) = name_json_pair in
     begin match opt_json with
     | None -> (name, opt_json)

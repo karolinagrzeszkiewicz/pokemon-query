@@ -293,7 +293,7 @@
  
  (* one more test case: a combination of impure and pure expressions*)
  
- let succ x = 
+ let succ (x : int) : int = 
    Printf.printf "computing the successor of %d...\n" x; 
    x+1
  

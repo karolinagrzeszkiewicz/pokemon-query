@@ -24,11 +24,11 @@ module NameParser : Parser = struct
 
   let label = "name"
 
-  let parser json_str_opt = Option.bind json_str_opt (fun s -> get_field_string "name" s)
+  let parser (json_str_opt : string option) : output option = Option.bind json_str_opt (fun s -> get_field_string "name" s)
 
-  let print_not_found label = ()
+  let print_not_found (label : string) : unit = ()
 
-  let print_found label value = printf "%s: %s \n \n" label value
+  let print_found (label : string) (value : output) : unit = printf "%s: %s \n \n" label value
 
 end
 
@@ -40,11 +40,11 @@ module IsLegendaryParser : Parser = struct
 
   let label = "is_legendary"
 
-  let parser json_str_opt = Option.bind json_str_opt (fun s -> get_field_bool "is_legendary" s)
+  let parser (json_str_opt : string option) : output option = Option.bind json_str_opt (fun s -> get_field_bool "is_legendary" s)
 
-  let print_not_found label = printf "%s: NA \n \n" label
+  let print_not_found (label : string) : unit = printf "%s: NA \n \n" label
 
-  let print_found label value = printf "%s: %b \n \n" label value
+  let print_found (label : string) (value : output) : unit = printf "%s: %b \n \n" label value
 
 end
 
@@ -57,13 +57,13 @@ module HabitatParser : Parser = struct
 
   let label = "habitat"
 
-  let parser json_str_opt = 
+  let parser (json_str_opt : string option) : output option = 
     let json_opt = Option.bind json_str_opt (fun s -> get_field_json "habitat" s) 
     in Option.bind json_opt (fun str -> find_field_string "name" str)
 
-  let print_not_found label = printf "%s: NA \n \n" label
+  let print_not_found (label : string) : unit = printf "%s: NA \n \n" label
 
-  let print_found label value = printf "%s: %s \n \n" label value
+  let print_found (label : string) (value : output) : unit = printf "%s: %s \n \n" label value
 
 end
 
@@ -76,7 +76,7 @@ module DescriptionParser : Parser = struct
 
   let label = "description"
 
-  let parser json_str_opt = 
+  let parser (json_str_opt : string option) : output option = 
     let pick_first_description ls = 
       begin match ls with
       | json :: jsons -> find_field_string "flavor_text" json
@@ -87,9 +87,9 @@ module DescriptionParser : Parser = struct
     Option.bind eng_list_opt (fun ls -> pick_first_description ls)
     
 
-  let print_not_found label = printf "%s: NA \n \n" label
+  let print_not_found (label : string) : unit = printf "%s: NA \n \n" label
 
-  let print_found label value = printf "%s: %s \n \n" label value
+  let print_found (label : string) (value : output) : unit = printf "%s: %s \n \n" label value
 
 end
 
@@ -104,11 +104,11 @@ module HeightParser : Parser = struct
 
   let label = "height"
 
-  let parser json_str_opt = Option.bind json_str_opt (fun str -> get_field_int "height" str)
+  let parser (json_str_opt : string option) : output option = Option.bind json_str_opt (fun str -> get_field_int "height" str)
 
-  let print_not_found label = ()
+  let print_not_found (label : string) : unit = ()
 
-  let print_found label value = printf "%s: %i \n \n" label value
+  let print_found (label : string) (value : output) : unit = printf "%s: %i \n \n" label value
 
 end
 
@@ -120,7 +120,7 @@ module TypesParser : Parser = struct
 
   let label = "types"
 
-  let parser json_str_opt = 
+  let parser (json_str_opt : string option) : output option = 
     let get_type json = 
       match Option.bind (find_field_json "type" json) (fun js -> find_name js) with
       | Some s -> s
@@ -131,9 +131,9 @@ module TypesParser : Parser = struct
                                         | hd :: tl -> Some (hd :: tl)
                                         | [] -> None)
 
-  let print_not_found label = printf "%s: NA \n \n" label
+  let print_not_found (label : string) : unit = printf "%s: NA \n \n" label
 
-  let print_found label value = printf "%s: %s \n \n" label (unparse_list value)
+  let print_found (label : string) (value : output) : unit = printf "%s: %s \n \n" label (unparse_list value)
 
 end
 
