@@ -9,7 +9,7 @@ open Cohttp_async
 
 (* User input *)
 
-let ask_for_input () = 
+let ask_for_input (() : unit) : string Deferred.t = 
   let stdin = Lazy.force Reader.stdin in
   print_endline "> Enter a Pokemon name: ";
   Reader.read_line stdin
@@ -19,11 +19,11 @@ let ask_for_input () =
 
 (* API calls *)
 
-let get_uri_api1 name = (name, Uri.of_string ("https://pokeapi.co/api/v2/pokemon-species/"^name))
+let get_uri_api1 (name : string) : string * Uri.t = (name, Uri.of_string ("https://pokeapi.co/api/v2/pokemon-species/"^name))
 
-let get_uri_api2 name = (name, Uri.of_string ("https://pokeapi.co/api/v2/pokemon/"^name))
+let get_uri_api2 (name : string) : string * Uri.t = (name, Uri.of_string ("https://pokeapi.co/api/v2/pokemon/"^name))
 
-let get_reqBody name uri = (* val get_reqBody : 'a -> Uri.t -> ('a * string option) Deferred.t *)
+let get_reqBody (name : string) (uri : Uri.t) : (string * string option) Deferred.t = 
   try_with 
     (fun () -> (Client.call `GET uri >>= fun (_, body) ->
     body |> Cohttp_async.Body.to_string >>| fun body -> body))
@@ -34,12 +34,12 @@ let get_reqBody name uri = (* val get_reqBody : 'a -> Uri.t -> ('a * string opti
 
 (* the program *)
 
-let signal_invalid json_opt = 
+let signal_invalid (json_opt : string option) : unit = 
   if Option.is_empty json_opt 
   then print_endline "Invalid Pokemon name!"
 
 
-let run () =
+let run (() : unit) : unit Deferred.t =
   ask_for_input () 
   >>| (fun name -> get_uri_api1 name)
   >>= (fun (name, uri) -> get_reqBody name uri) 
