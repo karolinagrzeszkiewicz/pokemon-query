@@ -10,6 +10,8 @@ module Printer(Parse: Parser) = struct
 
   include Parse
 
+  (* if the input json is None we don't print anything, 
+  if the json is Some then we either print the entry if it is found or not found if it is not found*)
   let print (name_json_pair : string * string option) : string * string option = 
     let (name, opt_json) = name_json_pair in
     begin match opt_json with
